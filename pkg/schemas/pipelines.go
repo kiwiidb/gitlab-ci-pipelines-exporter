@@ -83,8 +83,6 @@ func NewPipeline(ctx context.Context, gp goGitlab.Pipeline) Pipeline {
 		QueuedDurationSeconds: float64(gp.QueuedDuration),
 		Source:                gp.Source,
 		Status:                gp.Status,
-		TriggeredByUsername:   gp.User.Username,
-		TriggeredByName:       gp.User.Name,
 	}
 	if gp.User != nil {
 		result.TriggeredByName = gp.User.Name
