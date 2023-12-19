@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"strconv"
 
 	log "github.com/sirupsen/logrus"
 	goGitlab "github.com/xanzy/go-gitlab"
@@ -90,6 +91,10 @@ func (c *Controller) PullRefMetrics(ctx context.Context, ref schemas.Ref) error 
 			Kind:   schemas.MetricKindRunCount,
 			Labels: labels,
 		}
+
+		//	Label the "most recent" metrics with the username and the pipeline id
+		labels["username"] = ref.LatestPipeline.TriggeredByUsername
+		labels["pipeline_id"] = strconv.Itoa(ref.LatestPipeline.ID)
 
 		storeGetMetric(ctx, c.Store, &runCount)
 
