@@ -183,10 +183,12 @@ func (m Metric) Key() MetricKey {
 		})
 	}
 
-	// If the metric is a "status" one, add the status label
+	// If the metric is a "status" one, add the status, username and id label
 	switch m.Kind {
 	case MetricKindJobStatus, MetricKindEnvironmentDeploymentStatus, MetricKindStatus, MetricKindTestCaseStatus:
 		key += m.Labels["status"]
+		key += m.Labels["username"]
+		key += m.Labels["pipeline_id"]
 	}
 
 	return MetricKey(strconv.Itoa(int(crc32.ChecksumIEEE([]byte(key)))))
